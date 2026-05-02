@@ -1,0 +1,47 @@
+# AI tool directories
+.adal/
+.agents/
+.augment/
+.bob/
+.claude/
+.codebuddy/
+.commandcode/
+.continue/
+.cortex/
+.crush/
+.factory/
+.goose/
+.iflow/
+.junie/
+.kilocode/
+.kiro/
+.kode/
+.mcpjam/
+.mux/
+.neovate/
+.openhands/
+.pi/
+.pochi/
+.qoder/
+.qwen/
+.roo/
+.trae/
+.vibe/
+.windsurf/
+.zencoder/
+
+# Skill reference files
+skills/
+
+# Work/draft files
+HANDOFF.md
+PUSH_AND_PR_GUIDE.md
+current-site-audit.md
+index\ (5).html
+index_enhanced.html
+mockup-home.html
+rebuild-plan.md
+site-content-extracted.md
+
+# Assets duplicated outside deploy folder
+vibration-l-logo.png
