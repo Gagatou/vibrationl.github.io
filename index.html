@@ -4,8 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vibration'L — Claudine Eydoux · Thérapeute Holistique</title>
+  <meta name="description" content="Claudine Eydoux, thérapeute holistique à Carry-le-Rouet. Soins énergétiques, yogathérapie, massage Matrice Médecine et cercles de femmes." />
+  <meta property="og:title" content="Vibration'L — Claudine Eydoux · Thérapeute Holistique" />
+  <meta property="og:description" content="Accompagnement holistique féminin à Carry-le-Rouet. Soins énergétiques, yogathérapie, Matrice Médecine." />
+  <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Jost:wght@300;400;500&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&family=Dancing+Script:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -19,10 +24,25 @@
       --petal:    #FDEBD0;
       --text:     #2D1A0E;
       --text-mid: #5C3520;
-      --text-soft:#9C6040;
+      --text-soft:#7A3E1A;
       --glow:     rgba(245,166,35,0.18);
       --glow2:    rgba(232,67,10,0.12);
     }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 1rem;
+      z-index: 200;
+      background: var(--flame);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .skip-link:focus { left: 1rem; }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -66,6 +86,7 @@
       transition: color 0.3s;
     }
     .nav-links a:hover { color: var(--flame); }
+    .nav-links a.active { color: var(--flame); font-weight: 500; }
     .nav-cta {
       background: linear-gradient(135deg, var(--flame), var(--gold));
       color: #fff;
@@ -321,9 +342,11 @@
       color: var(--text-soft);
       line-height: 1.8;
       margin-bottom: 1.4rem;
-      display: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out;
     }
-    .soin-detail.active { display: block; }
+    .soin-detail.active { max-height: 400px; }
     .btn-contact-soin {
       display: inline-block;
       background: linear-gradient(135deg, var(--flame), var(--gold));
@@ -676,6 +699,104 @@
       text-decoration: none;
     }
 
+    /* ── HAMBURGER & MOBILE DRAWER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px; height: 44px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      touch-action: manipulation;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--ember);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-drawer {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(253,246,236,0.97);
+      backdrop-filter: blur(16px);
+      z-index: 99;
+      padding: 5rem 2rem 2rem;
+      flex-direction: column;
+      gap: 0;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-drawer.open { transform: translateY(0); }
+    .mobile-drawer a {
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(232,67,10,0.08);
+      transition: color 0.2s;
+      touch-action: manipulation;
+    }
+    .mobile-drawer a:hover, .mobile-drawer a.active { color: var(--flame); }
+    .mobile-drawer .drawer-cta {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, var(--flame), var(--gold));
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(232,67,10,0.25);
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      z-index: 98;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+      align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      touch-action: manipulation;
+    }
+    .wa-float:hover { transform: scale(1.08); box-shadow: 0 10px 28px rgba(37,211,102,0.5); }
+
+    /* ── TOUCH & INTERACTION ── */
+    .btn-primary, .btn-secondary, .nav-cta, .soin-toggle,
+    .btn-contact-soin, .btn-tarif-contact, .btn-whatsapp, .social-btn {
+      touch-action: manipulation;
+    }
+    .btn-primary:active, .btn-secondary:active, .nav-cta:active {
+      transform: translateY(0) scale(0.97);
+    }
+    .soin-card:active, .tarif-card:active, .temoignage-card:active {
+      transform: translateY(-2px);
+    }
+    .social-btn { width: 44px; height: 44px; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1200px) {
       .soins-grid { grid-template-columns: repeat(2, 1fr); }
@@ -684,6 +805,9 @@
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .nav-cta { padding: 0.45rem 1.1rem; font-size: 0.7rem; }
+      .hamburger { display: flex; }
+      .mobile-drawer { display: flex; }
+      .wa-float { display: flex; }
       section { padding: 4rem 1.5rem; }
       .hero-inner { flex-direction: column; gap: 2.5rem; padding: 6rem 1.5rem 3rem; text-align: center; }
       .hero-logo-wrap { width: 200px; height: 200px; }
@@ -702,7 +826,7 @@
       .tarifs-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     }
     @media (max-width: 720px) {
-      body { font-size: 14px; }
+      body { font-size: 15px; }
       nav { padding: 0.75rem 1rem; }
       .nav-logo { font-size: 1.4rem; }
       .nav-cta { display: none; }
@@ -817,12 +941,19 @@
       footer { padding: 1rem 0.8rem; font-size: 0.7rem; }
       footer .footer-logo { font-size: 1rem; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      .particle { animation: none; display: none; }
+      .hero-logo-wrap::before { animation: none; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
 
+  <a href="#soins" class="skip-link">Aller au contenu</a>
+
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Navigation principale">
     <a class="nav-logo" href="#">Vibration'L</a>
     <ul class="nav-links">
       <li><a href="#soins">Soins</a></li>
@@ -831,10 +962,28 @@
       <li><a href="#temoignages">Témoignages</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a class="nav-cta" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank">
+    <a class="nav-cta" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank" rel="noopener noreferrer">
       Prendre RDV
     </a>
+    <button class="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-drawer" onclick="toggleNav(this)">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-label="Menu navigation">
+    <a href="#soins" onclick="closeNav()">Soins</a>
+    <a href="#tarifs" onclick="closeNav()">Tarifs</a>
+    <a href="#about" onclick="closeNav()">Claudine</a>
+    <a href="#temoignages" onclick="closeNav()">Témoignages</a>
+    <a href="#contact" onclick="closeNav()">Contact</a>
+    <a class="drawer-cta" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank" rel="noopener noreferrer" onclick="closeNav()">Prendre RDV</a>
+  </div>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="wa-float" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank" rel="noopener noreferrer" aria-label="Prendre rendez-vous sur WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
 
   <!-- HERO -->
   <section id="hero">
@@ -847,7 +996,7 @@
 
     <div class="hero-inner max-1200">
       <div class="hero-logo-wrap">
-        <img src="vibration-l-logo.png" alt="Logo Vibration'L - Femme en méditation lotus" />
+        <img src="vibration-l-logo.png" alt="Logo Vibration'L - Femme en méditation lotus" width="280" height="280" style="aspect-ratio:1/1" />
       </div>
       <div class="hero-text">
         <p class="hero-eyebrow">Carry-le-Rouet<br/>Bien-être féminin</p>
@@ -859,7 +1008,7 @@
           <span>vers votre équilibre profond.</span>
         </div>
         <div class="hero-actions">
-          <a class="btn-primary" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank">
+          <a class="btn-primary" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20!" target="_blank" rel="noopener noreferrer">
             Prendre rendez-vous
           </a>
           <button class="btn-secondary" onclick="document.getElementById('soins').scrollIntoView({behavior:'smooth'});">Découvrir les soins</button>
@@ -881,12 +1030,12 @@
 
         <!-- Soin énergétique -->
         <div class="soin-card">
-          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_78267e560f3043e1b1c80a11c3fa06af~mv2.jpeg" alt="Soin énergétique" />
+          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_78267e560f3043e1b1c80a11c3fa06af~mv2.jpeg" alt="Soin énergétique" loading="lazy" />
           <div class="soin-card-body">
             <span class="soin-icon">✦</span>
             <div class="soin-name">Soin Énergétique</div>
             <p class="soin-desc">Apaiser, harmoniser et rééquilibrer les corps et les émotions. Dénouer les blocages conscients et inconscients.</p>
-            <button class="soin-toggle" onclick="toggleDetail(this)">En savoir plus</button>
+            <button class="soin-toggle" onclick="toggleDetail(this)" aria-expanded="false">En savoir plus</button>
             <div class="soin-expand soin-detail">
               En présence ou à distance — l'Énergie Universelle n'a ni frontière ni limite. Le soin se déroule allongé, habillé, dans un espace sécurisant. Chaque séance est précédée d'un entretien et suivie d'un retour détaillé. Idéal pour les périodes de transitions, les douleurs chroniques ou pour se ressourcer.
               <br/><br/><em>À distance disponible · Soins pour animaux</em>
@@ -896,12 +1045,12 @@
 
         <!-- Yoga thérapie -->
         <div class="soin-card">
-          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_03fe2200598d4689b942ea3e84b44a39~mv2.jpg" alt="Yogathérapie" />
+          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_03fe2200598d4689b942ea3e84b44a39~mv2.jpg" alt="Yogathérapie" loading="lazy" />
           <div class="soin-card-body">
             <span class="soin-icon">◯</span>
             <div class="soin-name">Yoga Thérapie</div>
             <p class="soin-desc">Yoga thérapeutique basé sur la médecine ayurvédique. Séances personnalisées selon votre pathologie et phase de cycle.</p>
-            <button class="soin-toggle" onclick="toggleDetail(this)">En savoir plus</button>
+            <button class="soin-toggle" onclick="toggleDetail(this)" aria-expanded="false">En savoir plus</button>
             <div class="soin-expand soin-detail">
               La yogathérapie s'adapte à votre condition physique, état émotionnel et phase de cycle menstruel. Ce n'est pas du yoga sportif — c'est un accompagnement thérapeutique individuel incluant pranayama, asanas thérapeutiques, méditation et yoga nidra.
               <br/><br/><em>Forfaits disponibles · 4 ou 10 séances</em>
@@ -911,12 +1060,12 @@
 
         <!-- Matrice Médecine -->
         <div class="soin-card">
-          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_bb7eefa5ec2c4c1fa7bca17af4c0944d~mv2.jpeg" alt="Matrice Médecine" />
+          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_bb7eefa5ec2c4c1fa7bca17af4c0944d~mv2.jpeg" alt="Matrice Médecine" loading="lazy" />
           <div class="soin-card-body">
             <span class="soin-icon">❋</span>
             <div class="soin-name">Massage Matrice Médecine</div>
             <p class="soin-desc">Rituel ancestral de libération des mémoires utérines. Se connecter à sa nature profonde et retrouver l'apaisement.</p>
-            <button class="soin-toggle" onclick="toggleDetail(this)">En savoir plus</button>
+            <button class="soin-toggle" onclick="toggleDetail(this)" aria-expanded="false">En savoir plus</button>
             <div class="soin-expand soin-detail">
               Ce massage holistique du ventre agit sur les mémoires stockées dans l'utérus et les organes reproducteurs. Indiqué pour les douleurs menstruelles, les problèmes gynécologiques, ou pour se reconnecter à son centre créateur.
               <br/><br/><em>Entretien préalable obligatoire · Réservé aux femmes</em>
@@ -926,12 +1075,12 @@
 
         <!-- Cercle de Femmes -->
         <div class="soin-card">
-          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_ca11c0888c2c42329545bb7426f44cf9~mv2.jpeg" alt="Cercle de Femmes" />
+          <img class="soin-card-img" src="https://static.wixstatic.com/media/fdd8da_ca11c0888c2c42329545bb7426f44cf9~mv2.jpeg" alt="Cercle de Femmes" loading="lazy" />
           <div class="soin-card-body">
             <span class="soin-icon">☽</span>
             <div class="soin-name">Cercle de Femmes</div>
             <p class="soin-desc">Un espace sacré de partage, d'écoute et de reconnexion entre femmes, à travers rituels, méditations et introspection.</p>
-            <button class="soin-toggle" onclick="toggleDetail(this)">En savoir plus</button>
+            <button class="soin-toggle" onclick="toggleDetail(this)" aria-expanded="false">En savoir plus</button>
             <div class="soin-expand soin-detail">
               Des échanges bienveillants, ateliers créatifs, méditations guidées et temps d'introspection dans un cadre sécurisant. Rituels de nouvelle et pleine lune, exploration des chakras, santé holistique féminine.
               <br/><br/><em>Agenda via WhatsApp · Cercles privés sur demande</em>
@@ -960,7 +1109,7 @@
           <div class="tarif-duration">1h30 · En présence</div>
           <div class="tarif-price">70€</div>
           <div class="tarif-extra">À distance : 50€<br/>Animaux : 30€</div>
-          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20un%20Soin%20%C3%89nerg%C3%A9tique." target="_blank">Prendre contact</a>
+          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20un%20Soin%20%C3%89nerg%C3%A9tique." target="_blank" rel="noopener noreferrer">Prendre contact</a>
         </div>
 
         <div class="tarif-card">
@@ -969,7 +1118,7 @@
           <div class="tarif-duration">1h30 · Individuelle</div>
           <div class="tarif-price">65€</div>
           <div class="tarif-extra">Forfait 4 : 240€<br/>10 séances : 550€</div>
-          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20une%20s%C3%A9ance%20de%20Yoga%20Th%C3%A9rapie." target="_blank">Prendre contact</a>
+          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20une%20s%C3%A9ance%20de%20Yoga%20Th%C3%A9rapie." target="_blank" rel="noopener noreferrer">Prendre contact</a>
         </div>
 
         <div class="tarif-card">
@@ -978,7 +1127,7 @@
           <div class="tarif-duration">2h · Massage holistique</div>
           <div class="tarif-price">130€</div>
           <div class="tarif-extra">Entretien préalable<br/>obligatoire · Femmes</div>
-          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20un%20Massage%20Matrice%20M%C3%A9decine." target="_blank">Prendre contact</a>
+          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20prendre%20rendez-vous%20pour%20un%20Massage%20Matrice%20M%C3%A9decine." target="_blank" rel="noopener noreferrer">Prendre contact</a>
         </div>
 
         <div class="tarif-card">
@@ -987,7 +1136,7 @@
           <div class="tarif-duration">2h · Collectif</div>
           <div class="tarif-price">20€</div>
           <div class="tarif-extra">30€ pour 3h<br/>Agenda via WhatsApp<br/>Cercles privés sur demande</div>
-          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20rejoindre%20le%20Cercle%20de%20Femmes." target="_blank">Prendre contact</a>
+          <a class="btn-tarif-contact" href="https://wa.me/33621972095?text=Bonjour%20Claudine%20%F0%9F%8C%99%20Je%20souhaite%20rejoindre%20le%20Cercle%20de%20Femmes." target="_blank" rel="noopener noreferrer">Prendre contact</a>
         </div>
 
       </div>
@@ -999,7 +1148,7 @@
     <div class="max-1200">
       <div class="about-inner">
         <div class="about-img-wrap">
-          <img src="https://static.wixstatic.com/media/fdd8da_a871b45f95f24f53877f0adb318e4185~mv2.jpeg" alt="Portrait Claudine Eydoux" />
+          <img src="https://static.wixstatic.com/media/fdd8da_a871b45f95f24f53877f0adb318e4185~mv2.jpeg" alt="Portrait Claudine Eydoux" loading="lazy" />
         </div>
         <div class="about-text">
           <span class="section-label">Mon chemin</span>
@@ -1084,48 +1233,58 @@
             <h2 class="section-title">Prendre contact</h2>
           </div>
           <div class="contact-item">
-            <div class="contact-icon">📍</div>
+            <div class="contact-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
             <div>
               <div class="contact-label">Localisation</div>
               <div class="contact-value">Carry-le-Rouet, Provence-Alpes-Côte d'Azur</div>
             </div>
           </div>
           <div class="contact-item">
-            <div class="contact-icon">📱</div>
+            <div class="contact-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
             <div>
               <div class="contact-label">WhatsApp</div>
-              <a class="contact-value" href="https://wa.me/33621972095" target="_blank">+33 6 21 97 20 95</a>
+              <a class="contact-value" href="https://wa.me/33621972095" target="_blank" rel="noopener noreferrer">+33 6 21 97 20 95</a>
             </div>
           </div>
           <div class="contact-item">
-            <div class="contact-icon">📧</div>
+            <div class="contact-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
             <div>
               <div class="contact-label">Email</div>
               <a class="contact-value" href="mailto:vibrationl.claudine@gmail.com">vibrationl.claudine@gmail.com</a>
             </div>
           </div>
           <div class="contact-socials">
-            <a class="social-btn" href="https://www.instagram.com/vibrationl.claudine" target="_blank" title="Instagram">📷</a>
-            <a class="social-btn" href="https://www.facebook.com/claudine.eydoux.3" target="_blank" title="Facebook">f</a>
+            <a class="social-btn" href="https://www.instagram.com/vibrationl.claudine" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a class="social-btn" href="https://www.facebook.com/claudine.eydoux.3" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
           </div>
         </div>
         <div class="contact-form">
           <form id="contactForm">
             <div class="form-group">
-              <label class="form-label" for="name">Nom</label>
-              <input class="form-input" id="name" type="text" placeholder="Votre nom complet" required />
+              <label class="form-label" for="name">Nom <span aria-hidden="true" style="color:var(--flame)">*</span></label>
+              <input class="form-input" id="name" type="text" placeholder="Votre nom complet" required aria-required="true" autocomplete="name" />
             </div>
             <div class="form-group">
-              <label class="form-label" for="email">Email</label>
-              <input class="form-input" id="email" type="email" placeholder="Votre email" required />
+              <label class="form-label" for="email">Email <span aria-hidden="true" style="color:var(--flame)">*</span></label>
+              <input class="form-input" id="email" type="email" placeholder="Votre email" required aria-required="true" autocomplete="email" />
             </div>
             <div class="form-group">
-              <label class="form-label" for="phone">Téléphone</label>
-              <input class="form-input" id="phone" type="tel" placeholder="Votre téléphone" />
+              <label class="form-label" for="phone">Téléphone <span class="optional" style="font-weight:300;color:var(--text-soft)">(optionnel)</span></label>
+              <input class="form-input" id="phone" type="tel" placeholder="Votre téléphone" autocomplete="tel" />
             </div>
             <div class="form-group">
-              <label class="form-label" for="service">Service intéressé</label>
-              <select class="form-select" id="service" required>
+              <label class="form-label" for="service">Service souhaité <span aria-hidden="true" style="color:var(--flame)">*</span></label>
+              <select class="form-select" id="service" required aria-required="true">
                 <option value="">Choisir un service...</option>
                 <option value="Soin Énergétique">Soin Énergétique</option>
                 <option value="Yoga Thérapie">Yoga Thérapie</option>
@@ -1134,9 +1293,10 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" for="message">Message</label>
-              <textarea class="form-textarea" id="message" placeholder="Votre message..." required></textarea>
+              <label class="form-label" for="message">Message <span aria-hidden="true" style="color:var(--flame)">*</span></label>
+              <textarea class="form-textarea" id="message" placeholder="Votre message..." required aria-required="true"></textarea>
             </div>
+            <div id="form-error" role="alert" aria-live="polite" style="display:none;margin-bottom:0.8rem;padding:0.7rem 1rem;border-left:3px solid var(--flame);background:rgba(232,67,10,0.06);border-radius:0 8px 8px 0;font-size:0.82rem;color:var(--ember);"></div>
             <button class="btn-whatsapp" type="button" onclick="sendWhatsapp()">Envoyer via WhatsApp</button>
           </form>
         </div>
@@ -1147,29 +1307,76 @@
   <!-- FOOTER -->
   <footer>
     <a class="footer-logo" href="#">Vibration'L</a>
-    <p>© 2024 Vibration'L · Claudine Eydoux · Tous droits réservés</p>
+    <p>© <span id="year"></span> Vibration'L · Claudine Eydoux · Tous droits réservés</p>
   </footer>
 
   <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav
+    function toggleNav(btn) {
+      const drawer = document.getElementById('mobile-drawer');
+      const isOpen = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+    function closeNav() {
+      const drawer = document.getElementById('mobile-drawer');
+      const btn = document.querySelector('.hamburger');
+      drawer.classList.remove('open');
+      if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-label', 'Ouvrir le menu'); }
+      document.body.style.overflow = '';
+    }
+
+    // Scroll-spy: highlight active nav link
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    const sections = document.querySelectorAll('section[id]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+
     function toggleDetail(btn) {
       const detail = btn.nextElementSibling;
       if (detail && detail.classList.contains('soin-detail')) {
         detail.classList.toggle('active');
-        btn.textContent = detail.classList.contains('active') ? 'Moins d\'infos' : 'En savoir plus';
+        const isOpen = detail.classList.contains('active');
+        btn.textContent = isOpen ? 'Moins d\'infos' : 'En savoir plus';
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
     }
 
     function sendWhatsapp() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
       const service = document.getElementById('service').value;
-      const message = document.getElementById('message').value;
+      const message = document.getElementById('message').value.trim();
+      const errorDiv = document.getElementById('form-error');
 
-      if (!name || !email || !service || !message) {
-        alert('Veuillez remplir tous les champs requis');
+      const missing = [];
+      if (!name) missing.push('Nom');
+      if (!email) missing.push('Email');
+      if (!service) missing.push('Service souhaité');
+      if (!message) missing.push('Message');
+
+      if (missing.length) {
+        errorDiv.textContent = 'Veuillez remplir les champs requis : ' + missing.join(', ') + '.';
+        errorDiv.style.display = 'block';
+        errorDiv.style.borderColor = 'var(--flame)';
+        errorDiv.style.color = 'var(--ember)';
+        errorDiv.style.background = 'rgba(232,67,10,0.06)';
         return;
       }
+
+      errorDiv.style.display = 'none';
 
       const whatsappMessage = `Bonjour Claudine 🌙
 Nom: ${name}
@@ -1179,7 +1386,13 @@ Service: ${service}
 Message: ${message}`;
 
       const encodedMessage = encodeURIComponent(whatsappMessage);
-      window.open(`https://wa.me/33621972095?text=${encodedMessage}`, '_blank');
+      window.open(`https://wa.me/33621972095?text=${encodedMessage}`, '_blank', 'noopener,noreferrer');
+
+      errorDiv.textContent = 'Message envoyé ! Claudine vous répondra bientôt. 🌙';
+      errorDiv.style.display = 'block';
+      errorDiv.style.borderColor = '#2a9d5c';
+      errorDiv.style.color = '#1a6e3e';
+      errorDiv.style.background = 'rgba(42,157,92,0.07)';
     }
   </script>
 
