@@ -1376,6 +1376,9 @@
       heroLogo.removeAttribute('autoplay');
       showLastFrame();
     } else {
+      // vidéo source de 11 s jouée en ~5 s
+      heroLogo.defaultPlaybackRate = 2.2;
+      heroLogo.playbackRate = 2.2;
       const p = heroLogo.play();
       if (p) p.catch(showLastFrame);
     }
